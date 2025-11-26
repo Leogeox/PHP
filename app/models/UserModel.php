@@ -7,9 +7,9 @@ class UserModel extends Bdd
         parent::__construct();
     }
 
-    public function createUser(array $data): User|false
+    public function createUser(array $data): true
     {
-        $users = $this->co->prepare('SELECT * FROM Users WHERE id = :id LIMIT 1');
+        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email, mdp = :mdp LIMIT 1');
         $users->setFetchMode(PDO::FETCH_CLASS, 'Users');
 
         if ($data != $users) {
@@ -22,7 +22,7 @@ class UserModel extends Bdd
 
     public function logUser(string $email, string $mdp): array
     {
-        $users = $this->co->prepare('SELECT * FROM Users WHERE id = :id LIMIT 1');
+        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email, mdp = :mdp LIMIT 1');
         $users->setFetchMode(PDO::FETCH_CLASS, 'Users');
         $users->execute([
             'email' => $email,
