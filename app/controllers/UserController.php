@@ -4,33 +4,44 @@ require_once './app/utils/Render.php';
 class UserController
 {
     use Render;
-    public function findAll(): void
+
+    public function createUser(array $data): void
     {
         $userModel = new UserModel();
-        $users = $userModel->findAll();
+        $user = $userModel->createUser($data);
 
-        // Prépatation du tableau à envoyer au layout
         $data = [
-            'title' => 'Liste des utilisateurs',
-            'users' => $users
+            'title' => 'Creer votre utilisateur',
+            'user' => $user
         ];
 
-        // Rendu avec layout
-        $this->renderView('user/all', $data);
+        $this->renderView('user/one', $data);
     }
 
-    public function findOneById(int $id): void
+    public function logUser(string $email, string $mdp): void
     {
         $userModel = new UserModel();
-        $user = $userModel->findOneById($id);
+        $user = $userModel->logUser($email, $mdp);
 
-        // Prépatation du tableau à envoyer au layout
         $data = [
-            'title' => 'Un utilisateur',
+            'title' => 'Votre utilisateur',
             'user' => $user
         ];
 
         // Rendu avec layout
         $this->renderView('user/one', $data);
+    }
+
+    public function getAllUsers(): void
+    {
+        $userModel = new UserModel();
+        $users = $userModel->getAllUsers();
+
+        $data = [
+            'title' => 'Liste des utilisateurs',
+            'users' => $users
+        ];
+
+        $this->renderView('user/all', $data);
     }
 }
