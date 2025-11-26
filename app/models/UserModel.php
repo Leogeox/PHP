@@ -12,13 +12,13 @@ class UserModel extends Bdd
         $users = $this->co->prepare('SELECT * FROM Users');
         $users->execute();
 
-        return $users->fetchAll(PDO::FETCH_CLASS, 'User');
+        return $users->fetchAll(PDO::FETCH_CLASS, 'Users');
     }
 
     public function findOneById(int $id): User|false
     {
         $users = $this->co->prepare('SELECT * FROM Users WHERE id = :id LIMIT 1');
-        $users->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $users->setFetchMode(PDO::FETCH_CLASS, 'Users');
         $users->execute([
             'id' => $id
         ]);
