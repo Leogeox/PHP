@@ -5,20 +5,37 @@ class UserController
 {
     use Render;
 
-    public function createUser(array $data): void
+    public function index(): void
+    {
+        $userModel = new UserModel();
+        $users = $userModel->getAllUsers();
+        if ($users = $admin) {
+            // ?? definir admin ??
+            $data = [
+                'title' => 'Liste des utilisateurs',
+                'users' => $users
+            ];
+        }
+
+        $this->renderView('user/all', $data);
+        // A CHANGER
+    }
+
+    public function register(array $data): void
     {
         $userModel = new UserModel();
         $user = $userModel->createUser($data);
 
-        $data = [
+        $data1 = [
             'title' => 'Creer votre utilisateur',
             'user' => $user
         ];
 
-        $this->renderView('user/one', $data);
+        $this->renderView('user/one', $data1);
+        // A CHANGER
     }
 
-    public function logUser(string $email, string $mdp): void
+    public function login(string $email, string $mdp): void
     {
         $userModel = new UserModel();
         $user = $userModel->logUser($email, $mdp);
@@ -28,20 +45,25 @@ class UserController
             'user' => $user
         ];
 
-        // Rendu avec layout
         $this->renderView('user/one', $data);
+        // A CHANGER
     }
 
-    public function getAllUsers(): void
+    public function logout(string $email, string $mdp): void
     {
         $userModel = new UserModel();
-        $users = $userModel->getAllUsers();
+        $user = $userModel->logUser($email, $mdp);
 
         $data = [
-            'title' => 'Liste des utilisateurs',
-            'users' => $users
+            'title' => 'Vous etes deconnecter'
         ];
 
-        $this->renderView('user/all', $data);
+        $this->renderView('user/one', $data);
+        // A CHANGER
     }
+
+    // index() : liste des utilisateurs inscrits. Cette page doit uniquement être visible et accessible par les administrateurs.
+// register() : inscrit un nouvel utilisateur.
+// login() : connecte un utilisateur.
+// logout() : déconnecte l’utilisateur connecté.
 }
