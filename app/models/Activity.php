@@ -16,7 +16,6 @@ class Activity
         return $this->id;
     }
 
-
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
@@ -27,12 +26,10 @@ class Activity
         return $this->nom;
     }
 
-
     public function getTypeId(): string
     {
         return $this->type_id;
     }
-
 
     public function setPlacesDisponibles(int $places_disponibles): self
     {
@@ -44,7 +41,6 @@ class Activity
         return $this->places_disponibles;
     }
 
-
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -55,7 +51,6 @@ class Activity
         return $this->description;
     }
 
-
     public function setDateTimeDebut(DateTime $datetime_debut): self
     {
         $this->datetime_debut = $datetime_debut;
@@ -65,7 +60,6 @@ class Activity
     {
         return $this->datetime_debut;
     }
-
 
     public function setDuree(int $duree): self
     {
