@@ -1,5 +1,90 @@
 <?php
+require_once './app/utils/Render.php';
 
+class ActivityController
+{
+    use Render;
+
+    public function index(): void
+    {
+        $activityModel = new ActivityModel();
+        $activity = $activityModel->getAllActivities();
+        $user = new UserModel();
+
+        $data = [
+            'title' => 'Liste d activités',
+            'activités' => $activity
+        ];
+
+        if ($user === 'admin') {
+            // ajout activites
+        }
+        ;
+
+        $this->renderView('user/all', $data);
+        // A CHANGER
+    }
+
+    public function show(int $id): void
+    {
+        $activityModel = new ActivityModel();
+        $activity = $activityModel->getActivityById($id);
+        $user = new UserModel();
+
+        $data = [
+            'activité' => $activity
+        ];
+
+        if ($user === 'admin') {
+            // mise a jour + sup activite
+        }
+        ;
+
+        $this->renderView('user/all', $data);
+        // A CHANGER
+    }
+
+    public function update(int $id, array $data): void
+    {
+        $activityModel = new ActivityModel();
+        $activity = $activityModel->getActivityById($id);
+        $user = new UserModel();
+
+        if ($user === 'admin') {
+            $data1 = [
+                'activités' => $activity
+                // $data = UPDATE
+            ];
+        } else if ($user != 'admin') {
+            $data1 = [
+                $data = null,
+            ];
+        }
+        ;
+
+        $this->renderView('user/all', $data1);
+        // A CHANGER
+    }
+
+    public function delete(int $id): void
+    {
+        $activityModel = new ActivityModel();
+        $activity = $activityModel->getActivityById($id);
+        $user = new UserModel();
+
+        if ($user === 'admin') {
+            $data = [
+                'title' => 'Liste d activités',
+                'activités' => $activity
+                // DELETE
+            ];
+        }
+        ;
+
+        $this->renderView('user/all', $data);
+        // A CHANGER
+    }
+}
 // index() : affiche toutes les activités disponibles.
 // Si l’utilisateur est administrateur, lui proposer l’ajout d’une nouvelle activité.
 // show(int $id) : affiche les détails d’une activité et propose le formulaire de réservation.
