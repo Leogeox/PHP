@@ -55,4 +55,9 @@ class User
     {
         return $this->mdp;
     }
+
+    public function getRole(): string
+    {
+        return $this->role;
+    }
 }
