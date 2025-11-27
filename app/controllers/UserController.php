@@ -9,12 +9,13 @@ class UserController
     {
         $userModel = new UserModel();
         $users = $userModel->getAllUsers();
-        if ($users = $admin) {
-            // ?? definir admin ??
+        if ($users === 'admin') {
             $data = [
                 'title' => 'Liste des utilisateurs',
                 'users' => $users
             ];
+        } else if ($users != 'admin') {
+            $data = null;
         }
 
         $this->renderView('user/all', $data);
