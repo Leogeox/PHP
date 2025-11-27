@@ -49,10 +49,10 @@ class ReservationController
         $reservationModel = $reservationModel->cancelReservation($id);
 
         $data = [
-            false
+            null
         ];
 
-        // $this->renderView('user/all', $data);
+        $this->renderView('user/all', $data);
         // A CHANGER
     }
 }
