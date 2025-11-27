@@ -58,6 +58,12 @@ class User
 
     public function getRole(): string
     {
+        if ($this->role === 'admin') {
+            return 'ADMIN';
+
+        } else if ($this->role === 'user') {
+            return 'USER';
+        }
         return $this->role;
     }
 }
