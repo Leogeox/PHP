@@ -1,10 +1,9 @@
 <?php
-echo "<h1>Liste des activitées</h1>";
 if (count($activities) > 0) {
     foreach ($activities as $activity) {
-        echo '<a href="/activity/show">' . $activity->getNom() . '</a><br>';
-
+        echo '<a href="/activity/show/' . $activity->getId() . '">'
+            . htmlspecialchars($activity->getNom()) . '</a><br>';
     }
 } else {
-    echo '<p>Aucun utilisateur</p>';
+    echo '<p>Aucune activité</p>';
 }

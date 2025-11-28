@@ -16,26 +16,18 @@ class ActivityController
         ];
 
         $this->renderView('activity/all', $data);
-        // A CHANGER
     }
 
     public function show(int $id): void
     {
         $activityModel = new ActivityModel();
         $activity = $activityModel->getActivityById($id);
-        $user = new UserModel();
 
         $data = [
-            'activité' => $activity
+            'activities' => $activity
         ];
 
-        if ($user === 'admin') {
-            // mise a jour + sup activite
-        }
-        ;
-
         $this->renderView('activity/one', $data);
-        // A CHANGER
     }
 
     public function update(int $id, array $data): void
