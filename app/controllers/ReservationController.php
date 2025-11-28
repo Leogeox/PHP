@@ -7,14 +7,27 @@ class ReservationController
 
     public function index(int $userId): void
     {
-        $reservationModel = new ReservationModel();
-        $reservationModel = $reservationModel->getReservationsByUserId($userId);
+        // $reservationModel = new ReservationModel();
+        // $reservationModel = $reservationModel->getReservationsByUserId($userId);
 
-        $data = [
-            'user connecté' => $userId
-        ];
-        $this->renderView('reservation/all', $data);
+        // $data = [
+        //     'user connecté' => $userId
+        // ];
+        // $this->renderView('reservation/all', $data);
         // A CHANGER
+
+        $reservationModel = new ReservationModel();
+        $reservations = $reservationModel->getReservationsByUserId($userId);
+        $user = new UserModel();
+
+        if ($user) {
+            $data = [
+                'user' => $user,
+                'reservations' => $reservations,
+            ];
+        }
+
+        $this->renderView('reservation/all', $data);
     }
 
     public function create(int $userId, int $activityId): void
@@ -41,6 +54,7 @@ class ReservationController
         // ];
         // $this->renderView('reservation/one', $data);
         // A CHANGER
+
     }
 
     public function cancel(int $id): void
