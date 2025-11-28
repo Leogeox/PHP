@@ -67,6 +67,26 @@ class UserController
         //     'user' => $user
         // ];
 
+        if(isset($_POST['login'])) {
+            if(isset($_POST['email']) && !empty($_POST['email']) &&
+               isset($_POST['password']) && !empty($_POST['password'])) {
+                $email = htmlspecialchars($_POST['email']);
+                $mdp = $_POST['password'];
+
+                $userModel = new UserModel();
+                $user = $userModel->logUser($email, $mdp);
+
+                if($user) {
+                    header('Location: /user/index');
+                } else {
+                    echo '<p>Erreur : Email ou mot de passe incorrect.</p>';
+                }
+            }
+            else {
+                echo '<p>Veuillez remplir tous les champs.</p>';
+            }
+        }
+
         $this->renderView('user/login');
         // A CHANGER
     }
