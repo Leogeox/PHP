@@ -46,7 +46,7 @@ class UserController
             'user' => $user
         ];
 
-        $this->renderView('user/one', $data);
+        $this->renderView('user/register', $data);
         // A CHANGER
     }
 

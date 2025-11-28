@@ -37,7 +37,7 @@ class UserModel extends Bdd
         $users = $this->co->prepare('SELECT * FROM Users');
         $users->execute();
 
-        return $users->fetchAll(PDO::FETCH_CLASS, 'Users');
+        return $users->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 }
 
