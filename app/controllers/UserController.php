@@ -15,11 +15,12 @@ class UserController
                 'users' => $users
             ];
         } else if ($users != 'admin') {
-            $data = null;
+            $data = [
+                'Vous n avais pas accées a cette page'
+            ];
         }
 
         $this->renderView('user/all', $data);
-        // A CHANGER
     }
 
     public function register(array $data): void
