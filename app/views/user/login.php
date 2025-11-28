@@ -11,12 +11,12 @@
 
 <h2 class="h2-login">Se connecter</h2>
 
-<form action="" method="GET">
+<form action="" method="POST">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
     <br>
     <label for="mdp">Mot de passe:</label>
-    <input type="mdp" id="mdp" name="mdp" required>
+    <input type="password" id="mdp" name="mdp" required>
     <br>
     <input type="submit" value="Se connecter" name="login">
 </form>
