@@ -1,149 +1,73 @@
--- phpMyAdmin SQL Dump
--- version 6.0.0-dev+20251127.a700ba5407
--- https://www.phpmyadmin.net/
---
--- Host: localhost:3306
--- Generation Time: Nov 28, 2025 at 09:38 AM
--- Server version: 8.4.3
--- PHP Version: 8.3.16
+CREATE SCHEMA IF NOT EXISTS `reservations` DEFAULT CHARACTER SET utf8 ;
+USE `reservations` ;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+-- -----------------------------------------------------
+-- Table `reservations`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `reservations`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `prenom` VARCHAR(50) NULL,
+  `nom` VARCHAR(50) NULL,
+  `email` VARCHAR(150) NULL,
+  `mdp` VARCHAR(250) NULL,
+  `role` VARCHAR(50) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+-- -----------------------------------------------------
+-- Table `reservations`.`type_activities`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `reservations`.`type_activities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(50) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
 
---
--- Database: `reservations`
---
 
--- --------------------------------------------------------
+-- -----------------------------------------------------
+-- Table `reservations`.`activities`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `reservations`.`activities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(50) NULL,
+  `type_id` INT NULL,
+  `place_disponibles` INT NULL,
+  `description` VARCHAR(50) NULL,
+  `datetime_debut` INT NULL,
+  `duree` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_activities_type_activities1_idx` (`type_id` ASC) VISIBLE,
+  CONSTRAINT `fk_activities_type_activities1`
+    FOREIGN KEY (`type_id`)
+    REFERENCES `reservations`.`type_activities` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
---
--- Table structure for table `activities`
---
 
-CREATE TABLE `activities` (
-  `id` int NOT NULL,
-  `nom` varchar(200) DEFAULT NULL,
-  `type_id` int DEFAULT NULL,
-  `places_disponibles` int DEFAULT NULL,
-  `description` varchar(200) DEFAULT NULL,
-  `datetime_debut` datetime DEFAULT NULL,
-  `duree` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `reservations`
---
-
-CREATE TABLE `reservations` (
-  `id` int NOT NULL,
-  `user_id` int DEFAULT NULL,
-  `activite_id` int DEFAULT NULL,
-  `date_reservation` date DEFAULT NULL,
-  `etat` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `type_activite`
---
-
-CREATE TABLE `type_activite` (
-  `id` int NOT NULL,
-  `nom` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` int NOT NULL,
-  `prenom` varchar(200) DEFAULT NULL,
-  `nom` varchar(200) DEFAULT NULL,
-  `email` varchar(200) DEFAULT NULL,
-  `mdp` varchar(200) DEFAULT NULL,
-  `role` varchar(200) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `prenom`, `nom`, `email`, `mdp`, `role`) VALUES
-(1, 'fdsg', 'sfd', 'roucky4453@gmail.com', '$2y$10$L7MGF785jK9pIFNwtxoCG.QI5KPXgDtnlpdNqKFL0gJuwTrkmrqRO', NULL),
-(2, 'Lucas', 'Audoubert', 'google@gmail.com', '$2y$10$bZFsqOxN1aMGB.FgCIhZZ.Bq58l3sQ8deugLjdzppwgogwj7nfjKi', NULL);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `activities`
---
-ALTER TABLE `activities`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_activities_type_activite1_idx` (`type_id`);
-
---
--- Indexes for table `reservations`
---
-ALTER TABLE `reservations`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_reservations_user_idx` (`user_id`),
-  ADD KEY `fk_reservations_activities1_idx` (`activite_id`);
-
---
--- Indexes for table `type_activite`
---
-ALTER TABLE `type_activite`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `activities`
---
-ALTER TABLE `activities`
-  ADD CONSTRAINT `fk_activities_type_activite1` FOREIGN KEY (`type_id`) REFERENCES `type_activite` (`id`);
-
---
--- Constraints for table `reservations`
---
-ALTER TABLE `reservations`
-  ADD CONSTRAINT `fk_reservations_activities1` FOREIGN KEY (`activite_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- -----------------------------------------------------
+-- Table `reservations`.`reservations`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `reservations`.`reservations` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NULL,
+  `activite_id` INT NULL,
+  `date_reservation` VARCHAR(150) NULL,
+  `etat` TINYINT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_reservations_users_idx` (`user_id` ASC) VISIBLE,
+  INDEX `fk_reservations_activities1_idx` (`activite_id` ASC) VISIBLE,
+  CONSTRAINT `fk_reservations_users`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `reservations`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reservations_activities1`
+    FOREIGN KEY (`activite_id`)
+    REFERENCES `reservations`.`activities` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+bdd.txt
+3 KB
