@@ -7,17 +7,25 @@ class UserModel extends Bdd
         parent::__construct();
     }
 
-    public function createUser(array $data): true
+    public function createUser(array $data): bool
     {
-        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email, mdp = :mdp LIMIT 1');
-        $users->setFetchMode(PDO::FETCH_CLASS, 'Users');
+        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email LIMIT 1');
+        $users->execute([
+            'email' => $data['email']
+        ]);
 
-        if ($data != $users) {
-            $users += $data;
-        } else if ($data = $users) {
+        if ($users->rowCount() === 0) {
+            $insert = $this->co->prepare('INSERT INTO Users (prenom, nom, email, mdp) VALUES (:firstname, :lastname, :email, :mdp)');
+            $insert->execute([
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+                'mdp' => $data['password']
+            ]);
+            return true;
+        } else {
             return false;
         }
-        return $users->fetch();
     }
 
     public function logUser(string $email, string $mdp): array

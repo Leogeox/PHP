@@ -9,45 +9,65 @@ class UserController
     {
         $userModel = new UserModel();
         $users = $userModel->getAllUsers();
-        if ($users === 'admin') {
+        if ($users) {
             $data = [
                 'title' => 'Liste des utilisateurs',
                 'users' => $users
             ];
-        } else if ($users != 'admin') {
+        }
+        else {
             $data = [
-                'Vous n avais pas accées a cette page'
+                'title' => 'Liste des utilisateurs',
+                'users' => []
             ];
         }
 
         $this->renderView('user/all', $data);
     }
 
-    public function register(array $data): void
+    public function register(): void
     {
-        $userModel = new UserModel();
-        $user = $userModel->createUser($data);
+        if(isset($_POST['register'])) {
+            if(isset($_POST['firstname']) && !empty($_POST['firstname']) &&
+               isset($_POST['lastname']) && !empty($_POST['lastname']) &&
+               isset($_POST['email']) && !empty($_POST['email']) &&
+               isset($_POST['password']) && !empty($_POST['password'])) {
+                $data = [
+                    'firstname' => htmlspecialchars($_POST['firstname']),
+                    'lastname' => htmlspecialchars($_POST['lastname']),
+                    'email' => htmlspecialchars($_POST['email']),
+                    'password' => password_hash($_POST['password'], PASSWORD_BCRYPT)
+                ];
 
-        $data1 = [
-            'title' => 'Creer votre utilisateur',
-            'user' => $user
-        ];
+                $userModel = new UserModel();
+                $user = $userModel->createUser($data);
 
-        $this->renderView('user/one', $data1);
+                if($user) {
+                    header('Location: /user/login');
+                } else {
+                    echo '<p>Erreur : L\'email existe déjà.</p>';
+                }
+            }
+            else {
+                echo '<p>Veuillez remplir tous les champs.</p>';
+            }
+        }
+
+        $this->renderView('user/register');
         // A CHANGER
     }
 
-    public function login(string $email, string $mdp): void
+    public function login(): void
     {
-        $userModel = new UserModel();
-        $user = $userModel->logUser($email, $mdp);
+        // $userModel = new UserModel();
+        // $user = $userModel->logUser($email, $mdp);
 
-        $data = [
-            'title' => 'Votre utilisateur',
-            'user' => $user
-        ];
+        // $data = [
+        //     'title' => 'Votre utilisateur',
+        //     'user' => $user
+        // ];
 
-        $this->renderView('user/register', $data);
+        $this->renderView('user/login');
         // A CHANGER
     }
 
