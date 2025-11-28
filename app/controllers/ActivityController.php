@@ -21,7 +21,7 @@ class ActivityController
         }
         ;
 
-        $this->renderView('user/all', $data);
+        $this->renderView('activity/all', $data);
         // A CHANGER
     }
 
@@ -40,7 +40,7 @@ class ActivityController
         }
         ;
 
-        $this->renderView('user/all', $data);
+        $this->renderView('activity/one', $data);
         // A CHANGER
     }
 
@@ -62,7 +62,7 @@ class ActivityController
         }
         ;
 
-        $this->renderView('user/all', $data1);
+        $this->renderView('activity/one', $data1);
         // A CHANGER
     }
 
@@ -81,7 +81,7 @@ class ActivityController
         }
         ;
 
-        $this->renderView('user/all', $data);
+        $this->renderView('activity/one', $data);
         // A CHANGER
     }
 }

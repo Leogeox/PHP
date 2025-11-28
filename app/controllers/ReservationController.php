@@ -13,7 +13,7 @@ class ReservationController
         $data = [
             'user connecté' => $userId
         ];
-        $this->renderView('user/all', $data);
+        $this->renderView('reservation/all', $data);
         // A CHANGER
     }
 
@@ -26,7 +26,7 @@ class ReservationController
             'user connecté' => $userId,
             'actvite creer' => $activityId
         ];
-        $this->renderView('user/all', $data);
+        $this->renderView('ureservationser/one', $data);
         // A CHANGER
     }
 
@@ -39,7 +39,7 @@ class ReservationController
         //     'user connecté' => $userId,
         //     'actvite creer' => $activityId
         // ];
-        // $this->renderView('user/all', $data);
+        // $this->renderView('reservation/one', $data);
         // A CHANGER
     }
 
@@ -52,7 +52,7 @@ class ReservationController
             null
         ];
 
-        $this->renderView('user/all', $data);
+        $this->renderView('usereservationr/one', $data);
         // A CHANGER
     }
 }
