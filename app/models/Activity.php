@@ -6,9 +6,9 @@ class Activity
     private string $nom;
     private int $type_id;
 
-    private int $places_disponibles;
+    private int $place_disponibles;
     private string $description;
-    private DateTime $datetime_debut = new DateTIme();
+    private string $datetime_debut;
     private int $duree;
 
     public function getId(): int
@@ -33,12 +33,12 @@ class Activity
 
     public function setPlacesDisponibles(int $places_disponibles): self
     {
-        $this->places_disponibles = $places_disponibles;
+        $this->place_disponibles = $places_disponibles;
         return $this;
     }
-    public function getPlacesDisponibles(): string
+    public function getPlacesDisponibles(): int
     {
-        return $this->places_disponibles;
+        return $this->place_disponibles;
     }
 
     public function setDescription(string $description): self
@@ -51,12 +51,12 @@ class Activity
         return $this->description;
     }
 
-    public function setDateTimeDebut(DateTime $datetime_debut): self
+    public function setDateTimeDebut(string $datetime_debut): self
     {
         $this->datetime_debut = $datetime_debut;
         return $this;
     }
-    public function getDateTimeDebut(): DateTime
+    public function getDateTimeDebut(): string
     {
         return $this->datetime_debut;
     }

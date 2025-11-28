@@ -9,17 +9,11 @@ class ActivityController
     {
         $activityModel = new ActivityModel();
         $activity = $activityModel->getAllActivities();
-        $user = new UserModel();
 
         $data = [
             'title' => 'Liste d activités',
-            'activités' => $activity
+            'activities' => $activity
         ];
-
-        if ($user === 'admin') {
-            // ajout activites
-        }
-        ;
 
         $this->renderView('activity/all', $data);
         // A CHANGER

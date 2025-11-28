@@ -13,9 +13,8 @@ class ActivityModel extends Bdd
         $activities = $this->co->prepare('SELECT * FROM Activities');
         $activities->execute();
 
-        return $activities->fetchAll(PDO::FETCH_CLASS, 'Activities');
+        return $activities->fetchAll(PDO::FETCH_CLASS, 'Activity');
     }
-
     public function getActivityById(int $id): array
     {
         $activities = $this->co->prepare('SELECT * FROM Activities WHERE id = :id LIMIT 1');
@@ -36,5 +35,3 @@ class ActivityModel extends Bdd
     }
 
 }
-
-

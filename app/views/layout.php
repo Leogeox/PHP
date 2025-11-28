@@ -11,9 +11,9 @@
 <body>
     <header>
         <h1>Mon site MVC</h1>
-        <nav>
+        <!-- <nav>
             <a href="/user/findAll">Liste des utilisateurs</a>
-        </nav>
+        </nav> -->
     </header>
 
     <main>
