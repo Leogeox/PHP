@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 6.0.0-dev+20251127.a700ba5407
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 26, 2025 at 07:39 PM
+-- Generation Time: Nov 28, 2025 at 09:38 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -78,6 +78,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `prenom`, `nom`, `email`, `mdp`, `role`) VALUES
+(1, 'fdsg', 'sfd', 'roucky4453@gmail.com', '$2y$10$L7MGF785jK9pIFNwtxoCG.QI5KPXgDtnlpdNqKFL0gJuwTrkmrqRO', NULL),
+(2, 'Lucas', 'Audoubert', 'google@gmail.com', '$2y$10$bZFsqOxN1aMGB.FgCIhZZ.Bq58l3sQ8deugLjdzppwgogwj7nfjKi', NULL);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -109,6 +117,16 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -122,8 +140,8 @@ ALTER TABLE `activities`
 -- Constraints for table `reservations`
 --
 ALTER TABLE `reservations`
-  ADD CONSTRAINT `fk_reservations_activities1` FOREIGN KEY (`activite_id`) REFERENCES `activities` (`id`),
-  ADD CONSTRAINT `fk_reservations_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `fk_reservations_activities1` FOREIGN KEY (`activite_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reservations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
