@@ -28,13 +28,13 @@ class UserModel extends Bdd
         }
     }
 
-    public function logUser(string $email, string $mdp): array
+    public function logUser(array $data): array
     {
-        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email, mdp = :mdp LIMIT 1');
+        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email AND mdp = :mdp');
         $users->setFetchMode(PDO::FETCH_CLASS, 'Users');
         $users->execute([
-            'email' => $email,
-            'mdp' => $mdp
+            'email' => $data['email'],
+            'mdp' => $data['mdp']
         ]);
 
         return $users->fetch();
@@ -48,4 +48,3 @@ class UserModel extends Bdd
         return $users->fetchAll(PDO::FETCH_CLASS, 'User');
     }
 }
-

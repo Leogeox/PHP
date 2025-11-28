@@ -69,12 +69,14 @@ class UserController
 
         if(isset($_POST['login'])) {
             if(isset($_POST['email']) && !empty($_POST['email']) &&
-               isset($_POST['password']) && !empty($_POST['password'])) {
-                $email = htmlspecialchars($_POST['email']);
-                $mdp = $_POST['password'];
+               isset($_POST['mdp']) && !empty($_POST['mdp'])) {
+                $data = [
+                    'email' => htmlspecialchars($_POST['email']),
+                    'mdp' => $_POST['mdp']
+                ];
 
                 $userModel = new UserModel();
-                $user = $userModel->logUser($email, $mdp);
+                $user = $userModel->logUser($data);
 
                 if($user) {
                     header('Location: /user/index');
