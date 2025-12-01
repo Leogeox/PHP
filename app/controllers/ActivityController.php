@@ -16,7 +16,6 @@ class ActivityController
         ];
 
         $this->renderView('activity/all', $data);
-        // A CHANGER
     }
 
     public function show(int $id): void
@@ -26,57 +25,68 @@ class ActivityController
         $user = new UserModel();
 
         $data = [
-            'activité' => $activity
+            'activities' => $activity,
+            'user' => $user
         ];
 
-        if ($user === 'admin') {
-            // mise a jour + sup activite
+        if (isset($_UPDATE['update'])) {
+            if ($user && $user === 'admin') {
+                header('Location: /activity/update');
+            }
         }
-        ;
+
+        if (isset($_DELETE['delete'])) {
+            if ($user && $user === 'admin') {
+                header('Location: /activity/delete');
+            }
+        }
 
         $this->renderView('activity/one', $data);
-        // A CHANGER
     }
 
     public function update(int $id, array $data): void
     {
         $activityModel = new ActivityModel();
         $activity = $activityModel->getActivityById($id);
-        $user = new UserModel();
 
-        if ($user === 'admin') {
-            $data1 = [
-                'activités' => $activity
-                // $data = UPDATE
-            ];
-        } else if ($user != 'admin') {
-            $data1 = [
-                $data = null,
-            ];
+        $data = [
+            'activities' => $activity,
+        ];
+
+        if (isset($_POST['update'])) {
+            if (
+                isset($_POST['nom']) &&
+                //    isset($_POST['place_dispobibles']) &&
+                isset($_POST['description']) &&
+                isset($_POST['datetime_debut']) &&
+                isset($_POST['duree'])
+            ) {
+                $data = [
+                    'nom' => htmlspecialchars($_POST['nom']),
+                    // 'place_dispobibles' => $_POST['place_dispobibles']
+                    'description' => htmlspecialchars($_POST['description']),
+                    'datetime_debut' => ($_POST['datetime_debut']),
+                    'duree' => ($_POST['duree'])
+                ];
+            }
         }
-        ;
 
-        $this->renderView('activity/one', $data1);
-        // A CHANGER
+        $this->renderView('activity/update', $data);
     }
 
     public function delete(int $id): void
     {
         $activityModel = new ActivityModel();
         $activity = $activityModel->getActivityById($id);
-        $user = new UserModel();
 
-        if ($user === 'admin') {
+        if (isset($_DELETE['delete'])) {
             $data = [
-                'title' => 'Liste d activités',
-                'activités' => $activity
-                // DELETE
+                'activities' => $activity,
+                // a supprimer ??
             ];
         }
-        ;
 
-        $this->renderView('activity/one', $data);
-        // A CHANGER
+        $this->renderView('activity/delete', $data);
     }
 }
 // index() : affiche toutes les activités disponibles.

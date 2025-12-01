@@ -1,0 +1,2 @@
+<?
+echo 'Activité supprimer';
