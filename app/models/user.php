@@ -2,16 +2,16 @@
 
 class User
 {
-    private int $id;
-    private string $nom;
-    private string $prenom;
+    private ?int $id = null;
+    private ?string $nom = null;
+    private ?string $prenom = null;
 
-    private string $email;
-    private string $mdp;
-    private string $role;
+    private ?string $email = null;
+    private ?string $mdp = null;
+    private ?string $role = null;
 
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -21,7 +21,7 @@ class User
         $this->nom = $nom;
         return $this;
     }
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -31,7 +31,7 @@ class User
         $this->prenom = $prenom;
         return $this;
     }
-    public function getPrenom(): string
+    public function getPrenom(): ?string
     {
         return $this->prenom;
     }
@@ -41,26 +41,28 @@ class User
         $this->email = $email;
         return $this;
     }
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
     public function setMdp(string $mdp): self
     {
-        $this->pwd = $mdp;
+        $this->mdp = $mdp;
         return $this;
     }
-    public function getMdp(): string
+    public function getMdp(): ?string
     {
         return $this->mdp;
     }
 
-    public function getRole(): string
+    public function getRole(): ?string
     {
+        if ($this->role === null) {
+            return null;
+        }
         if ($this->role === 'admin') {
             return 'ADMIN';
-
         } else if ($this->role === 'user') {
             return 'USER';
         }

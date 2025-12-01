@@ -8,6 +8,9 @@
 //     echo '<p>Utilisateur introuvable</p>';
 // }
 ?> -->
+<head>
+    <link rel="stylesheet" href="../../style/login.css">
+</head>
 
 <h2 class="h2-login">Se connecter</h2>
 

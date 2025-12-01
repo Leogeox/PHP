@@ -28,16 +28,22 @@ class UserModel extends Bdd
         }
     }
 
-    public function logUser(array $data): array
+    public function logUser(array $data): ?User
     {
-        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email AND mdp = :mdp');
-        $users->setFetchMode(PDO::FETCH_CLASS, 'Users');
+        // Récupère l'utilisateur par email, puis vérifie le mot de passe
+        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email LIMIT 1');
+        $users->setFetchMode(PDO::FETCH_CLASS, 'User');
         $users->execute([
-            'email' => $data['email'],
-            'mdp' => $data['mdp']
+            'email' => $data['email']
         ]);
 
-        return $users->fetch();
+        $user = $users->fetch();
+
+        if ($user && $user->getMdp() !== null && password_verify($data['mdp'], $user->getMdp())) {
+            return $user;
+        }
+
+        return null;
     }
 
     public function getAllUsers(): array

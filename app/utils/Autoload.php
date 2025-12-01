@@ -22,10 +22,10 @@ class Autoload
    require_once $controller;
   } else if (file_exists($model)) {
    require_once $model;
-  } else if (file_exists($util)) {
-   require_once $util;
-  } else {
-   die('<p>Fichier introuvable</p>');
-  }
+    } else if (file_exists($util)) {
+     require_once $util;
+    } else {
+     die('<p>Fichier introuvable : ' . $class . '</p>');
+    }
  }
 }
