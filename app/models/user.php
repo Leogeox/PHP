@@ -8,7 +8,7 @@ class User
 
     private ?string $email = null;
     private ?string $mdp = null;
-    private ?string $role = null;
+    private string $role;
 
 
     public function getId(): ?int
@@ -56,15 +56,12 @@ class User
         return $this->mdp;
     }
 
-    public function getRole(): ?string
+    public function getRole(): string
     {
-        if ($this->role === null) {
-            return null;
-        }
         if ($this->role === 'admin') {
-            return 'ADMIN';
+            return 'Admin';
         } else if ($this->role === 'user') {
-            return 'USER';
+            return 'User';
         }
         return $this->role;
     }

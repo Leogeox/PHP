@@ -14,9 +14,16 @@ if (count($activities) > 0) {
 
         if ($user && $user === 'admin') {
             ?>
-            <input method="POST" type="submit" value="Update" name="update">
-            <input method="DELETE" type="submit" value="Delete" name="delete">
+            <form method="POST" action="/activity/update/<?php echo $id; ?>">
+                <input type="submit" value="Update" name="update">
+            </form>
+
+            <form method="POST" action="/activity/delete/<?php echo $id; ?>">
+                <input type="submit" value="Delete" name="delete">
+            </form>
             <?php
+        } else {
+            echo 'does it works?';
         }
     }
 } else {

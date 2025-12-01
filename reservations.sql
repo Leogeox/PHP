@@ -71,3 +71,5 @@ CREATE TABLE IF NOT EXISTS `reservations`.`reservations` (
 ENGINE = InnoDB;
 bdd.txt
 3 KB
+
+ALTER TABLE `users` CHANGE `isAdmin` `role` VARCHAR(50) NULL DEFAULT 'user';

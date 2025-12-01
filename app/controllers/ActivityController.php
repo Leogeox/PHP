@@ -26,17 +26,17 @@ class ActivityController
 
         $data = [
             'activities' => $activity,
-            'user' => $user
+            'user' => $user,
         ];
 
-        if (isset($_UPDATE['update'])) {
-            if ($user && $user === 'admin') {
+        if (isset($_POST['update'])) {
+            if ($user && $user == 'admin') {
                 header('Location: /activity/update');
             }
         }
 
-        if (isset($_DELETE['delete'])) {
-            if ($user && $user === 'admin') {
+        if (isset($_POST['delete'])) {
+            if ($user && $user->role = 'admin') {
                 header('Location: /activity/delete');
             }
         }
@@ -82,7 +82,6 @@ class ActivityController
         if (isset($_DELETE['delete'])) {
             $data = [
                 'activities' => $activity,
-                // a supprimer ??
             ];
         }
 

@@ -53,4 +53,5 @@ class UserModel extends Bdd
 
         return $users->fetchAll(PDO::FETCH_CLASS, 'User');
     }
+
 }
