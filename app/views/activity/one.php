@@ -9,7 +9,9 @@ if (count($activities) > 0) {
         echo '<p> Durée : ' . $activity->getDuree() . 'h</p>';
         // affiche les détails d’une activité et propose le formulaire de réservation.
         ?>
-        <input type="submit" value="Reserver" name="reserver">
+        <form method="POST" action="/activity/update/<?php echo $id; ?>">
+            <input type="submit" value="Reserver" name="reserver">
+        </form>
         <?php
 
         if ($user && $user === 'admin') {

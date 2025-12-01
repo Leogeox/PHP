@@ -5,24 +5,22 @@ class ReservationController
 {
     use Render;
 
-    public function index(int $userId): void
+    public function index(): void
     {
-        // $reservationModel = new ReservationModel();
-        // $reservationModel = $reservationModel->getReservationsByUserId($userId);
+        session_start();
 
-        // $data = [
-        //     'user connecté' => $userId
-        // ];
-        // $this->renderView('reservation/all', $data);
-        // A CHANGER
+        if (!isset($_SESSION['user_id'])) {
+            die("Not logged in");
+        }
+
+        $userId = $_SESSION['user_id'];
 
         $reservationModel = new ReservationModel();
         $reservations = $reservationModel->getReservationsByUserId($userId);
-        $user = new UserModel();
 
-        if ($user) {
+        if ($userId) {
             $data = [
-                'user' => $user,
+                'user' => $userId,
                 'reservations' => $reservations,
             ];
         }
@@ -39,21 +37,20 @@ class ReservationController
             'user connecté' => $userId,
             'actvite creer' => $activityId
         ];
-        $this->renderView('ureservationser/one', $data);
+        $this->renderView('reservationser/one', $data);
         // A CHANGER
     }
 
     public function show(int $id): void
     {
-        $reservationModel = new ReservationModel();
-        // $reservationModel = $reservationModel->createReervation($userId, $activityId);
+        // $reservationModel = new ReservationModel();
+        // $reservation = $reservationModel ->getReservationsByUserId();
 
-        // $data = [
-        //     'user connecté' => $userId,
-        //     'actvite creer' => $activityId
-        // ];
-        // $this->renderView('reservation/one', $data);
-        // A CHANGER
+        // if (isset($_POST['reserver'])) {
+        //     header('Location: /reservation/one');
+        // }
+
+        // $this->renderView('reservation/one');
 
     }
 

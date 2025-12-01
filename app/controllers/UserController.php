@@ -7,6 +7,8 @@ class UserController
 
     public function index(): void
     {
+        session_start();
+
         $userModel = new UserModel();
         $users = $userModel->getAllUsers();
         if ($users) {
@@ -73,6 +75,11 @@ class UserController
                 $user = $userModel->logUser($data);
 
                 if ($user) {
+                    // session_start();
+
+                    // $_SESSION['user_id'] = $user->id;
+                    // $_SESSION['user_role'] = $user->role;
+
                     header('Location: /');
                 } else {
                     echo '<p>Erreur : Email ou mot de passe incorrect.</p>';
@@ -81,6 +88,7 @@ class UserController
                 echo '<p>Veuillez remplir tous les champs.</p>';
             }
         }
+
 
         $this->renderView('user/login');
         // A CHANGER
