@@ -14,8 +14,7 @@ class UserController
                 'title' => 'Liste des utilisateurs',
                 'users' => $users
             ];
-        }
-        else {
+        } else {
             $data = [
                 'title' => 'Liste des utilisateurs',
                 'users' => []
@@ -27,11 +26,13 @@ class UserController
 
     public function register(): void
     {
-        if(isset($_POST['register'])) {
-            if(isset($_POST['firstname']) && !empty($_POST['firstname']) &&
-               isset($_POST['lastname']) && !empty($_POST['lastname']) &&
-               isset($_POST['email']) && !empty($_POST['email']) &&
-               isset($_POST['password']) && !empty($_POST['password'])) {
+        if (isset($_POST['register'])) {
+            if (
+                isset($_POST['firstname']) && !empty($_POST['firstname']) &&
+                isset($_POST['lastname']) && !empty($_POST['lastname']) &&
+                isset($_POST['email']) && !empty($_POST['email']) &&
+                isset($_POST['password']) && !empty($_POST['password'])
+            ) {
                 $data = [
                     'firstname' => htmlspecialchars($_POST['firstname']),
                     'lastname' => htmlspecialchars($_POST['lastname']),
@@ -42,13 +43,12 @@ class UserController
                 $userModel = new UserModel();
                 $user = $userModel->createUser($data);
 
-                if($user) {
+                if ($user) {
                     header('Location: /user/login');
                 } else {
                     echo '<p>Erreur : L\'email existe déjà.</p>';
                 }
-            }
-            else {
+            } else {
                 echo '<p>Veuillez remplir tous les champs.</p>';
             }
         }
@@ -59,17 +59,11 @@ class UserController
 
     public function login(): void
     {
-        // $userModel = new UserModel();
-        // $user = $userModel->logUser($email, $mdp);
-
-        // $data = [
-        //     'title' => 'Votre utilisateur',
-        //     'user' => $user
-        // ];
-
-        if(isset($_POST['login'])) {
-            if(isset($_POST['email']) && !empty($_POST['email']) &&
-               isset($_POST['mdp']) && !empty($_POST['mdp'])) {
+        if (isset($_POST['login'])) {
+            if (
+                isset($_POST['email']) && !empty($_POST['email']) &&
+                isset($_POST['mdp']) && !empty($_POST['mdp'])
+            ) {
                 $data = [
                     'email' => htmlspecialchars($_POST['email']),
                     'mdp' => $_POST['mdp']
@@ -78,13 +72,12 @@ class UserController
                 $userModel = new UserModel();
                 $user = $userModel->logUser($data);
 
-                if($user) {
-                    header('Location: /user/index');
+                if ($user) {
+                    header('Location: /');
                 } else {
                     echo '<p>Erreur : Email ou mot de passe incorrect.</p>';
                 }
-            }
-            else {
+            } else {
                 echo '<p>Veuillez remplir tous les champs.</p>';
             }
         }
