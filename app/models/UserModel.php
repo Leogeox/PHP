@@ -42,6 +42,7 @@ class UserModel extends Bdd
         if ($user && $user->getMdp() !== null && password_verify($data['mdp'], $user->getMdp())) {
             session_start();
             $_SESSION['user'] = $users;
+            print_r($_SESSION['user']);
             return $user;
         }
 
