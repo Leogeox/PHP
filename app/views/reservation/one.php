@@ -1,4 +1,6 @@
 <?php
+session_start();
+$_SESSION['user'] = $users;
 if ($reservation) {
     echo '<h1>' . $reservation->getId() . '</h1>';
     echo '<p>' . $reservation->getDateReservation() . '</p>';

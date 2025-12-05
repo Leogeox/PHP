@@ -1,3 +1,8 @@
+<?php
+session_start();
+$_SESSION['user'] = $users;
+?>
+
 <form action="" method="POST">
     <label for="nom">Changer le nom:</label>
     <input type="text" id="nom" name="nom">
