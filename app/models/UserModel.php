@@ -7,32 +7,46 @@ class UserModel extends Bdd
         parent::__construct();
     }
 
-    public function createUser(array $data): true
+    public function createUser(array $data): bool
     {
-        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email, mdp = :mdp LIMIT 1');
-        $users->setFetchMode(PDO::FETCH_CLASS, 'Users');
+        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email LIMIT 1');
+        $users->execute([
+            'email' => $data['email']
+        ]);
 
-        if ($data != $users) {
-            $users += $data;
-        } else if ($data = $users) {
+        if ($users->rowCount() === 0) {
+            $insert = $this->co->prepare('INSERT INTO Users (prenom, nom, email, mdp) VALUES (:firstname, :lastname, :email, :mdp)');
+            $insert->execute([
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+                'mdp' => $data['password']
+            ]);
+            return true;
+        } else {
             return false;
         }
-        return $users->fetch();
     }
 
-    public function logUser(string $email, string $mdp): array
+    public function logUser(array $data): ?User
     {
-        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email, mdp = :mdp LIMIT 1');
-        $users->setFetchMode(PDO::FETCH_CLASS, 'Users');
+        // Récupère l'utilisateur par email, puis vérifie le mot de passe
+        $users = $this->co->prepare('SELECT * FROM Users WHERE email = :email LIMIT 1');
+        $users->setFetchMode(PDO::FETCH_CLASS, 'User');
         $users->execute([
-            'email' => $email,
-            'mdp' => $mdp
+            'email' => $data['email']
         ]);
 
         session_start();
         $_SESSION['user'] = $users;
 
-        return $users->fetch();
+        $user = $users->fetch();
+
+        if ($user && $user->getMdp() !== null && password_verify($data['mdp'], $user->getMdp())) {
+            return $user;
+        }
+
+        return null;
     }
 
     public function getAllUsers(): array
@@ -40,7 +54,7 @@ class UserModel extends Bdd
         $users = $this->co->prepare('SELECT * FROM Users');
         $users->execute();
 
-        return $users->fetchAll(PDO::FETCH_CLASS, 'Users');
+        return $users->fetchAll(PDO::FETCH_CLASS, 'User');
     }
-}
 
+}

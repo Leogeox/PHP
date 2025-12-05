@@ -7,46 +7,90 @@ class UserController
 
     public function index(): void
     {
+        session_start();
+
         $userModel = new UserModel();
         $users = $userModel->getAllUsers();
-        if ($users === 'admin') {
+        if ($users) {
             $data = [
                 'title' => 'Liste des utilisateurs',
                 'users' => $users
             ];
-        } else if ($users != 'admin') {
-            $data = null;
+        } else {
+            $data = [
+                'title' => 'Liste des utilisateurs',
+                'users' => []
+            ];
         }
 
         $this->renderView('user/all', $data);
+    }
+
+    public function register(): void
+    {
+        if (isset($_POST['register'])) {
+            if (
+                isset($_POST['firstname']) && !empty($_POST['firstname']) &&
+                isset($_POST['lastname']) && !empty($_POST['lastname']) &&
+                isset($_POST['email']) && !empty($_POST['email']) &&
+                isset($_POST['password']) && !empty($_POST['password'])
+            ) {
+                $data = [
+                    'firstname' => htmlspecialchars($_POST['firstname']),
+                    'lastname' => htmlspecialchars($_POST['lastname']),
+                    'email' => htmlspecialchars($_POST['email']),
+                    'password' => password_hash($_POST['password'], PASSWORD_BCRYPT)
+                ];
+
+                $userModel = new UserModel();
+                $user = $userModel->createUser($data);
+
+                if ($user) {
+                    header('Location: /user/login');
+                } else {
+                    echo '<p>Erreur : L\'email existe déjà.</p>';
+                }
+            } else {
+                echo '<p>Veuillez remplir tous les champs.</p>';
+            }
+        }
+
+        $this->renderView('user/register');
         // A CHANGER
     }
 
-    public function register(array $data): void
+    public function login(): void
     {
-        $userModel = new UserModel();
-        $user = $userModel->createUser($data);
+        if (isset($_POST['login'])) {
+            if (
+                isset($_POST['email']) && !empty($_POST['email']) &&
+                isset($_POST['mdp']) && !empty($_POST['mdp'])
+            ) {
+                $data = [
+                    'email' => htmlspecialchars($_POST['email']),
+                    'mdp' => $_POST['mdp']
+                ];
 
-        $data1 = [
-            'title' => 'Creer votre utilisateur',
-            'user' => $user
-        ];
+                $userModel = new UserModel();
+                $user = $userModel->logUser($data);
 
-        $this->renderView('user/one', $data1);
-        // A CHANGER
-    }
+                if ($user) {
+                    // session_start();
 
-    public function login(string $email, string $mdp): void
-    {
-        $userModel = new UserModel();
-        $user = $userModel->logUser($email, $mdp);
+                    // $_SESSION['user_id'] = $user->id;
+                    // $_SESSION['user_role'] = $user->role;
 
-        $data = [
-            'title' => 'Votre utilisateur',
-            'user' => $user
-        ];
+                    header('Location: /');
+                } else {
+                    echo '<p>Erreur : Email ou mot de passe incorrect.</p>';
+                }
+            } else {
+                echo '<p>Veuillez remplir tous les champs.</p>';
+            }
+        }
 
-        $this->renderView('user/one', $data);
+
+        $this->renderView('user/login');
         // A CHANGER
     }
 

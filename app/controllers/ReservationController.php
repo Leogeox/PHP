@@ -5,16 +5,27 @@ class ReservationController
 {
     use Render;
 
-    public function index(int $userId): void
+    public function index(): void
     {
-        $reservationModel = new ReservationModel();
-        $reservationModel = $reservationModel->getReservationsByUserId($userId);
+        session_start();
 
-        $data = [
-            'user connecté' => $userId
-        ];
-        $this->renderView('user/all', $data);
-        // A CHANGER
+        if (!isset($_SESSION['user_id'])) {
+            die("Not logged in");
+        }
+
+        $userId = $_SESSION['user_id'];
+
+        $reservationModel = new ReservationModel();
+        $reservations = $reservationModel->getReservationsByUserId($userId);
+
+        if ($userId) {
+            $data = [
+                'user' => $userId,
+                'reservations' => $reservations,
+            ];
+        }
+
+        $this->renderView('reservation/all', $data);
     }
     
     public function create(int $userId, int $activityId): void
@@ -26,21 +37,21 @@ class ReservationController
             'user connecté' => $userId,
             'actvite creer' => $activityId
         ];
-        $this->renderView('user/all', $data);
+        $this->renderView('reservationser/one', $data);
         // A CHANGER
     }
 
     public function show(int $id): void
     {
-        $reservationModel = new ReservationModel();
-        // $reservationModel = $reservationModel->createReervation($userId, $activityId);
+        // $reservationModel = new ReservationModel();
+        // $reservation = $reservationModel ->getReservationsByUserId();
 
-        // $data = [
-        //     'user connecté' => $userId,
-        //     'actvite creer' => $activityId
-        // ];
-        // $this->renderView('user/all', $data);
-        // A CHANGER
+        // if (isset($_POST['reserver'])) {
+        //     header('Location: /reservation/one');
+        // }
+
+        // $this->renderView('reservation/one');
+
     }
 
     public function cancel(int $id): void
@@ -52,7 +63,7 @@ class ReservationController
             null
         ];
 
-        $this->renderView('user/all', $data);
+        $this->renderView('usereservationr/one', $data);
         // A CHANGER
     }
 }
