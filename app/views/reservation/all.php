@@ -1,6 +1,7 @@
 <?php
 session_start();
 $_SESSION['user'] = $users;
+print_r($_SESSION['user']);
 echo "<h1>Liste des reservation</h1>";
 if (count($reservation) > 0) {
     foreach ($reservation as $r) {
