@@ -75,10 +75,10 @@ class UserController
                 $user = $userModel->logUser($data);
 
                 if ($user) {
-                    // session_start();
+                    session_start();
 
-                    // $_SESSION['user_id'] = $user->id;
-                    // $_SESSION['user_role'] = $user->role;
+                    $_SESSION['user_id'] = $user->getId();
+                    $_SESSION['user_role'] = $user->getRole();
 
                     header('Location: /');
                 } else {
