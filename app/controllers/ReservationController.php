@@ -16,7 +16,7 @@ class ReservationController
         $this->renderView('user/all', $data);
         // A CHANGER
     }
-
+    
     public function create(int $userId, int $activityId): void
     {
         $reservationModel = new ReservationModel();

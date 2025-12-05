@@ -29,6 +29,9 @@ class UserModel extends Bdd
             'mdp' => $mdp
         ]);
 
+        session_start();
+        $_SESSION['user'] = $users;
+
         return $users->fetch();
     }
 
