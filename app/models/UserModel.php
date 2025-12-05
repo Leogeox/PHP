@@ -37,12 +37,11 @@ class UserModel extends Bdd
             'email' => $data['email']
         ]);
 
-        session_start();
-        $_SESSION['user'] = $users;
-
         $user = $users->fetch();
 
         if ($user && $user->getMdp() !== null && password_verify($data['mdp'], $user->getMdp())) {
+            session_start();
+            $_SESSION['user'] = $users;
             return $user;
         }
 
