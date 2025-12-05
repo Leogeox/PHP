@@ -1,8 +1,3 @@
-<?php
-session_start();
-$_SESSION['user'] = $users;
-print_r($_SESSION['user']);
-?>
 
 <form action="" method="POST">
     <label for="nom">Changer le nom:</label>

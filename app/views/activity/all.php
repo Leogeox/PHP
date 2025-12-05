@@ -4,9 +4,6 @@ if (count($activities) > 0) {
         echo '<a href="/activity/show/' . $activity->getId() . '">'
             . htmlspecialchars($activity->getNom()) . '</a><br>';
     }
-    session_start();
-$_SESSION['user'] = $users;
-    print_r($_SESSION['user']);
 } else {
     echo '<p>Aucune activité</p>';
 }

@@ -1,7 +1,4 @@
 <?php
-session_start();
-$_SESSION['user'] = $users;
-print_r($_SESSION['user']);
 if (count($activities) > 0) {
     foreach ($activities as $activity) {
         echo '<h3>' . $activity->getNom() . '</h3>';
