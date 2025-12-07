@@ -11,7 +11,7 @@ if (count($activities) > 0) {
         <?php
         if ($isLoggedIn) {
             ?>
-            <!-- <form method="POST" action="/reservation/create/<?php echo $id; ?>">
+            <form method="POST" action="/reservation/create/<?php echo $id; ?>">
                 <input type="submit" value="Réserver" name="reserver">
                 <?php
                 if ($reservation) {
@@ -20,19 +20,19 @@ if (count($activities) > 0) {
                     <?php
                 }
                 ?>
-            </form> -->
+            </form>
             <?php
         }
 
         if ($isAdmin) {
             ?>
-            <!-- <form method="POST" action="/activity/update/<?php echo $id; ?>">
+            <form method="POST" action="/activity/update/<?php echo $id; ?>">
                 <input type="submit" value="Modifier" name="update">
             </form>
 
             <form method="POST" action="/activity/delete/<?php echo $id; ?>">
                 <input type="submit" value="Supprimer" name="delete">
-            </form> -->
+            </form>
             <?php
         }
     }
