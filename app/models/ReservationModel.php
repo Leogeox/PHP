@@ -40,12 +40,12 @@ class ReservationModel extends Bdd
     }
 
     public function cancelReservation(int $reservationId): bool
-    public function cancelReservation(int $reservationId): bool
     {
         $update = $this->co->prepare('UPDATE Reservations SET etat = false WHERE id = :id');
+        $update->execute([
             'id' => $reservationId
         ]);
 
-        return $result && $update->rowCount() > 0;
+        return $update->rowCount() > 0;
     }
 }

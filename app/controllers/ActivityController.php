@@ -21,15 +21,15 @@ class ActivityController
     public function show(int $id): void
     {
         session_start();
-        
+
         $activityModel = new ActivityModel();
         $activity = $activityModel->getActivityById($id);
-        
+
         $isAdmin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
         $isLoggedIn = isset($_SESSION['user_id']);
 
         $data = [
-            'activity' => $activity,
+            'activities' => $activity,
             'id' => $id,
             'isAdmin' => $isAdmin,
             'isLoggedIn' => $isLoggedIn,
