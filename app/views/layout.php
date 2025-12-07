@@ -16,9 +16,9 @@
         </nav>
         <nav>
             <?php
-            session_start();
+            // session_start();
             if (isset($_SESSION['user_id'])):
-            ?>
+                ?>
                 <span class="user-info">Connecté: <?= htmlspecialchars($_SESSION['user_email']) ?></span>
                 <a href="/user/logout" class="logout-btn">Se déconnecter</a>
             <?php else: ?>
