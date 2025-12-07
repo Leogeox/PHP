@@ -9,6 +9,15 @@ class UserController
     {
         session_start();
 
+
+        if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+            $data = [
+                'error' => 'Vous n\'avez pas l\'autorisation pour accede a cette page'
+            ];
+            $this->renderView('user/all', $data);
+            return;
+        }
+
         $userModel = new UserModel();
         $users = $userModel->getAllUsers();
         if ($users) {

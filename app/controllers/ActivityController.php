@@ -20,26 +20,20 @@ class ActivityController
 
     public function show(int $id): void
     {
+        session_start();
+        
         $activityModel = new ActivityModel();
         $activity = $activityModel->getActivityById($id);
-        $user = new UserModel();
+        
+        $isAdmin = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+        $isLoggedIn = isset($_SESSION['user_id']);
 
         $data = [
-            'activities' => $activity,
-            'user' => $user,
+            'activity' => $activity,
+            'id' => $id,
+            'isAdmin' => $isAdmin,
+            'isLoggedIn' => $isLoggedIn,
         ];
-
-        if (isset($_POST['update'])) {
-            if ($user && $user == 'admin') {
-                header('Location: /activity/update');
-            }
-        }
-
-        if (isset($_POST['delete'])) {
-            if ($user && $user->role = 'admin') {
-                header('Location: /activity/delete');
-            }
-        }
 
         $this->renderView('activity/one', $data);
     }

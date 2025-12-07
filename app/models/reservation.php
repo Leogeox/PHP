@@ -5,7 +5,7 @@ class Reservation
     private int $id;
     private int $user_id;
     private int $activite_id;
-    private DateTime $date_reservation = new DateTime;
+    private string $date_reservation;
     private bool $etat;
 
     public function getId(): int
@@ -23,28 +23,26 @@ class Reservation
         return $this->activite_id;
     }
 
-
-    public function setDateReservation(DateTime $date_reservation): self
+    public function setDateReservation($date_reservation): self
     {
         $this->date_reservation = $date_reservation;
         return $this;
     }
-    public function getDateReservation(): DateTime
+    
+    public function getDateReservation()
     {
         return $this->date_reservation;
     }
-
 
     public function setEtat(bool $etat): self
     {
         $this->etat = $etat;
         return $this;
     }
+    
     public function getEtat(): bool
     {
         return $this->etat;
     }
-
-
-
 }
+

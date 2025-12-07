@@ -28,17 +28,26 @@ class ReservationController
         $this->renderView('reservation/all', $data);
     }
     
-    public function create(int $userId, int $activityId): void
+    public function create(int $activityId): void
     {
-        $reservationModel = new ReservationModel();
-        $reservationModel = $reservationModel->createReservation($userId, $activityId);
+        session_start();
 
-        $data = [
-            'user connecté' => $userId,
-            'actvite creer' => $activityId
-        ];
-        $this->renderView('reservationser/one', $data);
-        // A CHANGER
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /user/login');
+            exit();
+        }
+
+        $userId = $_SESSION['user_id'];
+        $reservationModel = new ReservationModel();
+        
+        $result = $reservationModel->createReservation($userId, $activityId);
+
+        if ($result) {
+            header('Location: /reservation/index');
+            exit();
+        } else {
+            echo '<p style="color: red;">Erreur : Vous avez déjà une réservation pour cette activité.</p>';
+        }
     }
 
     public function show(int $id): void
@@ -56,15 +65,22 @@ class ReservationController
 
     public function cancel(int $id): void
     {
+        session_start();
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /user/login');
+            exit();
+        }
+
         $reservationModel = new ReservationModel();
-        $reservationModel = $reservationModel->cancelReservation($id);
+        $result = $reservationModel->cancelReservation($id);
 
-        $data = [
-            null
-        ];
-
-        $this->renderView('usereservationr/one', $data);
-        // A CHANGER
+        if ($result) {
+            header('Location: /reservation/index');
+            exit();
+        } else {
+            echo '<p style="color: red;">Erreur : Impossible d\'annuler la réservation.</p>';
+        }
     }
 }
 // index() : affiche les réservations de l’utilisateur connecté.

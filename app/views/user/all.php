@@ -1,9 +1,15 @@
 <?php
 echo "<h1>Liste des utilisateurs</h1>";
-if (count($users) > 0) {
- foreach ($users as $user) {
-    echo '<h2>' . $user->getEmail() . '</h2>';
- }
+
+if (isset($error)) {
+    echo '<p style="color: red;">' . htmlspecialchars($error) . '</p>';
 } else {
- echo '<p>Aucun utilisateur</p>';
+    if (count($users) > 0) {
+        foreach ($users as $user) {
+            echo '<h2>' . htmlspecialchars($user->getEmail()) . '</h2>';
+        }
+    } else {
+        echo '<p>Aucun utilisateurs</p>';
+    }
 }
+?>

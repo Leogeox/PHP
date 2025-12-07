@@ -1,34 +1,31 @@
 <?php
-if (count($activities) > 0) {
-    foreach ($activities as $activity) {
-        echo '<h3>' . $activity->getNom() . '</h3>';
-        echo '<p>' . $activity->getDescription() . '</p>';
-        echo '<p> Places disponible : ' . $activity->getPlacesDisponibles() . '</p>';
-        // Doit changer place dispo => ajouter places en data base et apres faire place prise
-        echo '<p> Heure début : ' . $activity->getDateTimeDebut() . ' h</p>';
-        echo '<p> Durée : ' . $activity->getDuree() . 'h</p>';
-        // affiche les détails d’une activité et propose le formulaire de réservation.
+if ($activity) {
+    echo '<h3>' . htmlspecialchars($activity->getNom()) . '</h3>';
+    echo '<p>' . htmlspecialchars($activity->getDescription()) . '</p>';
+    echo '<p>Places disponibles : ' . htmlspecialchars($activity->getPlacesDisponibles()) . '</p>';
+    echo '<p>Heure début : ' . htmlspecialchars($activity->getDateTimeDebut()) . '</p>';
+    echo '<p>Durée : ' . htmlspecialchars($activity->getDuree()) . 'h</p>';
+    
+    if ($isLoggedIn) {
         ?>
-        <form method="POST" action="/activity/update/<?php echo $id; ?>">
-            <input type="submit" value="Reserver" name="reserver">
+        <form method="POST" action="/reservation/create/<?php echo $id; ?>">
+            <input type="submit" value="Réserver" name="reserver">
         </form>
         <?php
+    }
+    
+    if ($isAdmin) {
+        ?>
+        <form method="POST" action="/activity/update/<?php echo $id; ?>">
+            <input type="submit" value="Modifier" name="update">
+        </form>
 
-        if ($user && $user === 'admin') {
-            ?>
-            <form method="POST" action="/activity/update/<?php echo $id; ?>">
-                <input type="submit" value="Update" name="update">
-            </form>
-
-            <form method="POST" action="/activity/delete/<?php echo $id; ?>">
-                <input type="submit" value="Delete" name="delete">
-            </form>
-            <?php
-        } else {
-            echo 'does it works?';
-        }
+        <form method="POST" action="/activity/delete/<?php echo $id; ?>">
+            <input type="submit" value="Supprimer" name="delete">
+        </form>
+        <?php
     }
 } else {
     echo '<p>Activité introuvable</p>';
 }
-
+?>

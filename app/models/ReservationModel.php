@@ -8,16 +8,24 @@ class ReservationModel extends Bdd
         parent::__construct();
     }
 
-    public function createReservation(int $userId, int $activityId): true
+    public function createReservation(int $userId, int $activityId): bool
     {
-        $reservations = $this->co->prepare('SELECT * FROM Reservations WHERE user_id = :user_id, activite_id = :activite_id LIMIT 1');
-        $reservations->setFetchMode(PDO::FETCH_CLASS, 'Reservations');
+        $reservations = $this->co->prepare('SELECT * FROM Reservations WHERE user_id = :user_id AND activite_id = :activite_id LIMIT 1');
         $reservations->execute([
             'user_id' => $userId,
             'activite_id' => $activityId
         ]);
 
-        return $reservations->fetch();
+        if ($reservations->rowCount() === 0) {
+            $insert = $this->co->prepare('INSERT INTO Reservations (user_id, activite_id, date_reservation, etat) VALUES (:user_id, :activite_id, NOW(), true)');
+            $insert->execute([
+                'user_id' => $userId,
+                'activite_id' => $activityId
+            ]);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getReservationsByUserId(int $userId): array
@@ -31,14 +39,13 @@ class ReservationModel extends Bdd
         return $reservations->fetchAll(PDO::FETCH_CLASS, 'Reservations');
     }
 
-    public function cancelReservation(int $reservationId): false
+    public function cancelReservation(int $reservationId): bool
+    public function cancelReservation(int $reservationId): bool
     {
-        $reservations = $this->co->prepare('SELECT * FROM Reservations WHERE id = :id LIMIT 1');
-        $reservations->setFetchMode(PDO::FETCH_CLASS, 'Reservations');
-        $reservations->execute([
+        $update = $this->co->prepare('UPDATE Reservations SET etat = false WHERE id = :id');
             'id' => $reservationId
         ]);
 
-        return $reservations->fetch();
+        return $result && $update->rowCount() > 0;
     }
 }
