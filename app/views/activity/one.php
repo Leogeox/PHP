@@ -11,15 +11,8 @@ if (count($activities) > 0) {
         <?php
         if ($isLoggedIn) {
             ?>
-            <form method="POST" action="/reservation/create/<?php echo $id; ?>">
+            <form method="POST" action="/reservation/one<?php echo $id; ?>">
                 <input type="submit" value="Réserver" name="reserver">
-                <?php
-                if ($reservation) {
-                    ?>
-                    <input type="submit" value="Annuler" name="annuler">
-                    <?php
-                }
-                ?>
             </form>
             <?php
         }
