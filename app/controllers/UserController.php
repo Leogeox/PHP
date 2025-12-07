@@ -61,6 +61,8 @@ class UserController
 
     public function login(): void
     {
+        session_start();
+        
         if (isset($_POST['login'])) {
             if (
                 isset($_POST['email']) && !empty($_POST['email']) &&
@@ -75,40 +77,37 @@ class UserController
                 $user = $userModel->logUser($data);
 
                 if ($user) {
-                    session_start();
-
                     $_SESSION['user_id'] = $user->getId();
                     $_SESSION['user_role'] = $user->getRole();
+                    $_SESSION['user_email'] = $user->getEmail();
 
                     header('Location: /');
+                    exit();
                 } else {
-                    echo '<p>Erreur : Email ou mot de passe incorrect.</p>';
+                    $error = 'Erreur : Email ou mot de passe incorrect.';
+                    $this->renderView('user/login', ['error' => $error]);
+                    return;
                 }
             } else {
-                echo '<p>Veuillez remplir tous les champs.</p>';
+                $error = 'Veuillez remplir tous les champs.';
+                $this->renderView('user/login', ['error' => $error]);
+                return;
             }
         }
 
-
         $this->renderView('user/login');
-        // A CHANGER
     }
 
-    public function logout(string $email, string $mdp): void
+    public function logout(): void
     {
-        $userModel = new UserModel();
-        $user = $userModel->logUser($email, $mdp);
-
-        $data = [
-            'title' => 'Vous etes deconnecter'
-        ];
-
-        $this->renderView('user/one', $data);
-        // A CHANGER
+        session_start();
+        session_destroy();
+        header('Location: /');
+        exit();
     }
 
     // index() : liste des utilisateurs inscrits. Cette page doit uniquement être visible et accessible par les administrateurs.
 // register() : inscrit un nouvel utilisateur.
 // login() : connecte un utilisateur.
-// logout() : déconnecte l’utilisateur connecté.
+// logout() : déconnecte l'utilisateur connecté.
 }

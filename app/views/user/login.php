@@ -14,6 +14,10 @@
 
 <h2 class="h2-login">Se connecter</h2>
 
+<?php if (isset($error)): ?>
+    <p style="color: red;"><?= $error ?></p>
+<?php endif; ?>
+
 <form action="" method="POST">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
