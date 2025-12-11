@@ -4,7 +4,7 @@ This project is a small interface developed for school using PHP, PHP Data Objec
 ## Installation & Start
 - Download the folder or clone the repository using
 ``` php
-git clone https://github.com/Leogeox/object-oriented-architecture.git
+git clone https://github.com/LeoVigin/object-oriented-architecture.git
 ```
 - Open the project in any local development server.
 - Install the dependencies:
