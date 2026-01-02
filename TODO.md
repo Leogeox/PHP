@@ -1,7 +1,0 @@
-- Session start !! (peut pas continuer projet sans)
-  --> Connexion
-  --> Logout
-  --> Si admin afficher button update & delete (fonctions + form fait => vrifier fonctionne)
-  --> Si admin afficher tous les utlisateurs (si !admin => afficher "Vous n'avez pas l'autorisation pour acceder a cette page")
-  --> Reservation selon userid (fonctions + view fait => verifier si fonctionne (normalement fonctionne))
-  --> Faire reservation (faire et annuler (si $user && reservation.etat = true => afficher button annuler(bool = false)))
